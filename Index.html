@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #ede7f6;
+      }
+
+      #myForm {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 500px;
+        margin: auto;
+        color: black;
+      }
+
+      .header {
+        background-color: #673ab7;
+        color: white;
+        padding: 20px;
+        border-radius: 5px 5px 0 0;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 0;
+      }
+
+      input[type="text"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid #bdbdbd;
+        outline: none;
+        font-size: 18px;
+      }
+
+      input[type="submit"] {
+        background-color: #673ab7;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #9575cd;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <form id="myForm">
+      <div class="header">
+        <h1>Your Custom Form Builder</h1>
+        <h5>An introduction to your form.</h5>
+      </div>
+      <!-- Feel free to add/edit more fields to your form! -->
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" /><br /><br />
+      <!-- <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" /><br /><br />
+      <label for="phone">Phone:</label><br />
+      <input type="tel" id="phone" name="phone" /><br /><br />
+      <label for="company">Company:</label><br />
+      <input type="text" id="company" name="company" /><br /><br />
+      <label for="position">Position:</label><br />
+      <input type="text" id="position" name="position" /><br /><br /> -->
+      <input type="submit" value="Submit" />
+    </form>
+    <div id="output"></div>
+    <script>
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          google.script.run.withSuccessHandler(onSuccess).processForm(this);
+        });
+
+      function onSuccess(output) {
+        if (output.status === "Success") {
+          google.script.run
+            .withSuccessHandler(function (content) {
+              var newWindow = window.open("", "_blank");
+              newWindow.document.write(content);
+            })
+            .getHtmlContent("Success");
+        } else {
+          google.script.run
+            .withSuccessHandler(function (content) {
+              var newWindow = window.open("", "_blank");
+              newWindow.document.write(content);
+            })
+            .getHtmlContent("Error", output.message);
+        }
+      }
+    </script>
+  </body>
+</html>
